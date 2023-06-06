@@ -4,53 +4,10 @@ import java.util.Scanner;
 public class ValidarCampos {
 
     public static boolean validarCampos(String nombre, String email, String password) {
-        if (nombre.length() > 16) {
-            System.out.println("El nombre no puede tener más de 16 carácteres");
-            return false;
-        }
-        if (!Character.isUpperCase(nombre.charAt(0))) {
-            System.out.println("El nombre tiene que empezar por mayúsculas");
-            return false;
-        }
-        for (int i = 1; i < nombre.length() - 4; i++) {
-            if (Character.isUpperCase(nombre.charAt(i))) {
-                System.out.println("Solo la primera letra del nombre tiene que estar en mayúsculas");
-                return false;
-            }
-        }
-        if (nombre.charAt(nombre.length() - 4) != '_' &&
-            nombre.charAt(nombre.length() - 4) != '-') {
-                System.out.println("Falta el guión o no está en la cuarta posición contando desde el final");
-                return false;
-        }
-        for (int i = nombre.length() - 3; i < nombre.length(); i++) {
-            if (!Character.isDigit(nombre.charAt(i))) {
-                System.out.println("El nombre tiene que terminar con tres dígitos");
-                return false;
-            }
-        }
+        ValidarNombre(nombre);
 
 
-        String[] dominiosPermitidos = {"paucasesnovescifp", "yahoo", "gmail", "hotmail"};
-        boolean dominioValido = false;
-        if (!email.contains("@")) {
-            System.out.println("Falta poner el arroba, @");
-            return false;
-        }
-        for(String dominio : dominiosPermitidos) {
-            if (email.contains("@" + dominio)) {
-                dominioValido = true;
-                break;
-            }
-        }
-        if (!dominioValido) {
-            System.out.println("Error de dominio");
-            return false;
-        }
-        if (!(email.endsWith(".com") ||email.endsWith(".es") || email.endsWith(".cat"))) {
-            System.out.println("Error de extensión");
-            return false;
-        }
+        CompruebaEmail(email);
 
 
         if (password.length() != 8) {
@@ -96,6 +53,57 @@ public class ValidarCampos {
 
 
     }
+
+	private static void CompruebaEmail(String email) {
+		String[] dominiosPermitidos = {"paucasesnovescifp", "yahoo", "gmail", "hotmail"};
+        boolean dominioValido = false;
+        if (!email.contains("@")) {
+            System.out.println("Falta poner el arroba, @");
+            return false;
+        }
+        for(String dominio : dominiosPermitidos) {
+            if (email.contains("@" + dominio)) {
+                dominioValido = true;
+                break;
+            }
+        }
+        if (!dominioValido) {
+            System.out.println("Error de dominio");
+            return false;
+        }
+        if (!(email.endsWith(".com") ||email.endsWith(".es") || email.endsWith(".cat"))) {
+            System.out.println("Error de extensión");
+            return false;
+        }
+	}
+
+	private static void ValidarNombre(String nombre) {
+		if (nombre.length() > 16) {
+            System.out.println("El nombre no puede tener más de 16 carácteres");
+            return false;
+        }
+        if (!Character.isUpperCase(nombre.charAt(0))) {
+            System.out.println("El nombre tiene que empezar por mayúsculas");
+            return false;
+        }
+        for (int i = 1; i < nombre.length() - 4; i++) {
+            if (Character.isUpperCase(nombre.charAt(i))) {
+                System.out.println("Solo la primera letra del nombre tiene que estar en mayúsculas");
+                return false;
+            }
+        }
+        if (nombre.charAt(nombre.length() - 4) != '_' &&
+            nombre.charAt(nombre.length() - 4) != '-') {
+                System.out.println("Falta el guión o no está en la cuarta posición contando desde el final");
+                return false;
+        }
+        for (int i = nombre.length() - 3; i < nombre.length(); i++) {
+            if (!Character.isDigit(nombre.charAt(i))) {
+                System.out.println("El nombre tiene que terminar con tres dígitos");
+                return false;
+            }
+        }
+	}
 
 }
 
